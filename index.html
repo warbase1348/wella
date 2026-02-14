@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aesthetic Pink Valentine</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Instrument+Serif:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg-pink: #fdf2f2; 
+    --clr-ink: #5a3e3e; 
+    --clr-paper: #ffffff;
+    --clr-accent: #f2a6b3; 
+    --clr-highlight: #ffccd5;
+    --washi-pink: rgba(242, 166, 179, 0.6);
+}
+
+body {
+    background-color: var(--bg-pink);
+    background-image: radial-gradient(circle at 2px 2px, rgba(242, 166, 179, 0.15) 1px, transparent 0);
+    background-size: 30px 30px;
+    color: var(--clr-ink);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.font-classic { font-family: 'Libre Baskerville', serif; }
+.font-normal { font-family: 'Inter', sans-serif; }
+
+.floating-heart {
+    position: fixed;
+    opacity: 0.4;
+    z-index: -1;
+    pointer-events: none;
+    animation: float-up 10s linear infinite, sway 4s ease-in-out infinite;
+}
+
+@keyframes float-up {
+    0% { bottom: -10%; transform: translateX(0); }
+    100% { bottom: 110%; transform: translateX(30px); }
+}
+
+@keyframes sway {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(10deg) translateX(20px); }
+}
+
+.h-1 { left: 8%; animation-delay: 0s; font-size: 1.2rem; }
+.h-2 { left: 18%; animation-delay: -3s; font-size: 2.2rem; }
+.h-3 { left: 30%; animation-delay: -7s; font-size: 1.5rem; }
+.h-4 { left: 45%; animation-delay: -2s; font-size: 1.8rem; }
+.h-5 { left: 60%; animation-delay: -5s; font-size: 1.3rem; }
+.h-6 { left: 75%; animation-delay: -8s; font-size: 2.5rem; }
+
+.heart-decor {
+    position: fixed;
+    color: var(--clr-accent);
+    opacity: 0.18;
+    z-index: -1;
+    pointer-events: none;
+}
+.f-1 { font-size: 7rem; top: -2%; left: -2%; transform: rotate(-15deg); }
+.f-2 { font-size: 6rem; top: -1%; right: -1%; transform: rotate(15deg); }
+
+.vintage-header {
+    padding: 60px 20px 30px;
+    text-align: center;
+    border-bottom: 2px solid var(--clr-highlight);
+    margin-bottom: 50px;
+}
+
+.valentine-card {
+    background: var(--clr-paper);
+    padding: 15px 15px 40px 15px; 
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    position: relative;
+    cursor: pointer;
+    transform: rotate(var(--rotation, -1deg));
+}
+
+.valentine-card::before {
+    content: "";
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 25px;
+    background: var(--washi-pink);
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+    z-index: 10;
+    clip-path: polygon(0% 0%, 5% 100%, 95% 100%, 100% 0%, 95% 20%, 5% 20%);
+}
+
+.valentine-card:hover {
+    transform: translateY(-10px) rotate(0deg);
+    box-shadow: 0 15px 30px rgba(242, 166, 179, 0.3);
+    z-index: 20;
+}
+
+.envelope-flap {
+    min-height: 200px;
+    background: #fffafa;
+    border: 1px solid #fef0f2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
+
+#greeting-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(253, 242, 242, 0.98); 
+    backdrop-filter: blur(10px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 3000;
+}
+
+.greeting-content { 
+    text-align: center; 
+    color: var(--clr-ink); 
+    width: 90%; 
+    max-width: 500px; 
+    padding: 20px;
+    animation: scaleUp 0.5s ease;
+}
+
+.greeting-content img { 
+    width: 100%; 
+    height: auto;
+    border: 12px solid white; 
+    box-shadow: 0 8px 25px rgba(242, 166, 179, 0.4); 
+    border-radius: 2px;
+}
+
+.val-btn {
+    background: transparent;
+    border: 1.5px solid var(--clr-accent);
+    color: var(--clr-ink);
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.val-btn:hover {
+    background: var(--clr-accent);
+    color: white;
+}
+
+.want-more-link {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: var(--clr-accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-style: italic;
+    cursor: pointer;
+}
+
+footer {
+    margin-top: auto;
+    padding: 40px 20px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.bottom-link-wrapper { text-align: right; }
+.bottom-link-wrapper a {
+    color: var(--clr-accent);
+    text-decoration: none;
+    font-weight: 700;
+    border-bottom: 1.5px solid var(--clr-highlight);
+}
+</style>
+</head>
+<body>
+
+<div class="floating-heart h-1">♥</div>
+<div class="floating-heart h-2">❣</div>
+<div class="floating-heart h-3">❤</div>
+<div class="floating-heart h-4">♥</div>
+<div class="floating-heart h-5">❣</div>
+<div class="floating-heart h-6">❤</div>
+
+<div class="heart-decor f-1">❤</div>
+<div class="heart-decor f-2">❤</div>
+
+<header class="container vintage-header">
+    <h1 class="font-classic display-5">Feb 14, 2026</h1>
+</header>
+
+<main class="container">
+<div class="row g-4 px-2 justify-content-center">
+
+<div class="col-11 col-sm-6 col-md-4">
+    <article class="valentine-card" onclick="showGreeting('Happy Hearts Day Ssob!<3')">
+        <div class="envelope-flap font-normal">
+            <p class="mt-2">Tap to see message</p>
+        </div>
+    </article>
+</div>
+
+<div class="col-11 col-sm-6 col-md-4">
+    <article class="valentine-card" onclick="showImage('meng.jpg')">
+        <div class="envelope-flap font-normal">
+             <p class="mt-2">Tap to view photo</p>
+        </div>
+    </article>
+</div>
+
+<div class="col-11 col-sm-6 col-md-4">
+    <article class="valentine-card" id="card3" onclick="openValentineQuestion()">
+        <div class="envelope-flap font-normal" id="card3-content">
+             <p class="mt-2">Tap to open</p>
+        </div>
+    </article>
+</div>
+
+</div>
+</main>
+
+<footer>
+    <div class="bottom-link-wrapper font-normal">
+        <p>After you open the cards</p>
+        <a href="https://vt.tiktok.com/ZSm6Q7ksN/" target="_blank">Click this link</a>
+    </div>
+</footer>
+
+<div id="greeting-overlay" onclick="closeGreeting()">
+    <div class="greeting-content" onclick="event.stopPropagation()">
+        <img id="overlay-image" src="" style="display:none;">
+        <p id="personal-message" class="font-classic mt-3" style="font-size: 1.8rem; line-height: 1.2;"></p>
+        <p class="small text-uppercase mt-4 opacity-50 font-normal" style="letter-spacing: 2px; font-size: 0.7rem;">( Tap background to close )</p>
+    </div>
+</div>
+
+<script>
+function showGreeting(msg) {
+    const overlay = document.getElementById('greeting-overlay');
+    const img = document.getElementById('overlay-image');
+    const messageEl = document.getElementById('personal-message');
+    img.style.display = "none";
+    messageEl.innerText = msg;
+    overlay.style.display = 'flex';
+    setTimeout(() => overlay.style.opacity = "1", 10);
+}
+
+function showImage(imageName) {
+    const overlay = document.getElementById('greeting-overlay');
+    const img = document.getElementById('overlay-image');
+    const messageEl = document.getElementById('personal-message');
+    img.src = imageName;
+    img.style.display = "block";
+    messageEl.innerText = imageName === 'meng.jpg' ? "🫶🏻🫶🏻🫶🏻" : ""; 
+    overlay.style.display = 'flex';
+    setTimeout(() => overlay.style.opacity = "1", 10);
+}
+
+function closeGreeting() {
+    const overlay = document.getElementById('greeting-overlay');
+    overlay.style.opacity = "0";
+    setTimeout(() => overlay.style.display = 'none', 400);
+}
+
+function openValentineQuestion() {
+    const container = document.getElementById("card3-content");
+    container.innerHTML = `
+        <p class="font-normal mb-3" style="font-size: 1rem; font-weight: 600;">are u sure to open?</p>
+        <div id="btn-wrap">
+            <button class="val-btn me-2" onclick="confirmYes(event)">Yes</button>
+            <button class="val-btn" onclick="closeFlap(event)">No</button>
+        </div>
+    `;
+    document.getElementById("card3").onclick = null;
+}
+
+function confirmYes(e) {
+    e.stopPropagation();
+    const container = document.getElementById("card3-content");
+    container.innerHTML = `
+        <p class="font-normal mb-3" style="font-size: 1rem; font-weight: 600;">Are u sure?</p>
+        <div>
+            <button class="val-btn me-2" onclick="finalReveal(event)">Yes</button>
+            <button class="val-btn" onclick="closeFlap(event)">No</button>
+        </div>
+    `;
+}
+
+function finalReveal(e) {
+    e.stopPropagation();
+    const container = document.getElementById("card3-content");
+    container.parentElement.style.overflow = "visible";
+    container.innerHTML = `
+        <div style="padding: 10px;">
+            <img src="mong.jpg" style="width: 100%; max-height: 250px; object-fit: contain; border-radius: 4px;">
+            <a class="want-more-link" onclick="askWantMore(event)">want more?</a>
+        </div>
+    `;
+}
+
+function askWantMore(e) {
+    e.stopPropagation();
+    const container = document.getElementById("card3-content");
+    container.innerHTML = `
+        <p class="font-normal mb-2" style="font-size: 0.9rem; font-weight: 600;">Want to see one more?</p>
+        <div>
+            <button class="val-btn me-2" onclick="showMaming(event)">Yes</button>
+            <button class="val-btn" onclick="finalReveal(event)">No</button>
+        </div>
+    `;
+}
+
+function showMaming(e) {
+    e.stopPropagation();
+    showImage('maming.jpg'); // Updated to your new filename
+}
+
+function closeFlap(e) {
+    e.stopPropagation();
+    location.reload();
+}
+</script>
+
+</body>
+</html>
